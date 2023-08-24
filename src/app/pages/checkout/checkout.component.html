@@ -1,0 +1,180 @@
+<app-page-header [headerTitle]="'Checkout'"></app-page-header>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-x-24">
+<div class="space-y-12">
+  <div class="border-b border-gray-900/10 pb-12">
+    <h2 class="text-base font-semibold leading-7 text-gray-900">Shipping information</h2>
+
+    <div class="mt-8 grid grid-cols-1 gap-x-6 gap-y-6 lg:gap-y-8 sm:grid-cols-6">
+      <div class="sm:col-span-3">
+        <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">First name</label>
+        <div class="mt-2">
+          <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        </div>
+      </div>
+
+      <div class="sm:col-span-3">
+        <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Last name</label>
+        <div class="mt-2">
+          <input type="text" name="last-name" id="last-name" autocomplete="family-name" class="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        </div>
+      </div>
+
+      <div class="col-span-full">
+        <label for="street-address" class="block text-sm font-medium leading-6 text-gray-900">Street address</label>
+        <div class="mt-2">
+          <input type="text" name="street-address" id="street-address" autocomplete="street-address" class="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        </div>
+      </div>
+      <div class="sm:col-span-3">
+        <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Country</label>
+        <div class="mt-2">
+          <select id="country" name="country" autocomplete="country-name" class="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+            <option>United States</option>
+            <option>Canada</option>
+            <option>Mexico</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="sm:col-span-3">
+        <label for="city" class="block text-sm font-medium leading-6 text-gray-900">City</label>
+        <div class="mt-2">
+          <input type="text" name="city" id="city" autocomplete="address-level2" class="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        </div>
+      </div>
+
+      <div class="sm:col-span-3">
+        <label for="region" class="block text-sm font-medium leading-6 text-gray-900">State / Province</label>
+        <div class="mt-2">
+          <input type="text" name="region" id="region" autocomplete="address-level1" class="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        </div>
+      </div>
+
+      <div class="sm:col-span-3">
+        <label for="postal-code" class="block text-sm font-medium leading-6 text-gray-900">ZIP / Postal code</label>
+        <div class="mt-2">
+          <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        </div>
+      </div>
+      <div class="sm:col-span-4">
+        <label for="phone" class="block text-sm font-medium leading-6 text-gray-900">Phone</label>
+        <div class="mt-2">
+          <input id="phone" name="phone" type="tel" autocomplete="phone" class="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pb-12">
+    <ul class="grid w-full gap-6 md:grid-cols-2">
+      <li>
+        <input type="radio" id="standard" name="hosting" [(ngModel)]="delivery" value="standard" class="hidden peer" required>
+        <label for="standard" class="inline-flex outline outline-1 outline-gray-300 justify-between w-full p-4 bg-white border border-transparent rounded-lg cursor-pointer peer-checked:border-indigo-600 peer-checked:outline-indigo-600">
+            <div class="block">
+                <div class="w-full text-sm font-semibold">Standard</div>
+                <div class="w-full text-sm text-gray-500 mt-1">4-10 business days</div>
+                <div class="w-full mt-6 text-sm font-semibold">$1.00</div>
+            </div>
+            <svg class="w-5 h-5 ml-3 hidden" [class]="delivery == 'standard'? '!inline text-indigo-600': ''" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path clip-rule="evenodd" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"></path>
+            </svg>
+        </label>
+      </li>
+      <li>
+        <input type="radio" id="express" name="hosting" [(ngModel)]="delivery" value="express" class="hidden peer" required>
+        <label for="express" class="inline-flex outline outline-1 outline-gray-300 justify-between w-full p-4 bg-white border border-transparent rounded-lg cursor-pointer peer-checked:border-indigo-600 peer-checked:outline-indigo-600">
+            <div class="block">
+                <div class="w-full text-sm font-semibold">Express</div>
+                <div class="w-full text-sm text-gray-500 mt-1">2-5 business days</div>
+                <div class="w-full mt-6 text-sm font-semibold">$16.00</div>
+            </div>
+            <svg class="w-5 h-5 ml-3 hidden" [class]="delivery == 'express'? '!inline text-indigo-600': ''" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path clip-rule="evenodd" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"></path>
+            </svg>
+        </label>
+      </li>
+  </ul>
+  </div>
+</div>
+<div>
+  <div>
+    <h2 class="text-base font-semibold leading-7 text-gray-900">Order Summary</h2>
+    <div class="mt-8 border shadow-xs rounded-xl bg-[#f9fafb]">
+      <div class="flow-root">
+        <ul role="list" class="divide-y divide-gray-200">
+          <li class="flex p-6">
+            <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+              <img src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg" alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." class="h-full w-full object-cover object-center">
+            </div>
+
+            <div class="ml-4 flex flex-1 flex-col">
+              <div>
+                <div class="flex justify-between text-base font-medium text-gray-900">
+                  <h3>
+                    <a href="#">Throwback Hip Bag</a>
+                  </h3>
+                  <p class="ml-4">$90.00</p>
+                </div>
+                <p class="mt-1 text-sm text-gray-500">Salmon</p>
+              </div>
+              <div class="flex flex-1 items-end justify-between text-sm">
+                <p class="text-gray-500">Qty 1</p>
+              </div>
+            </div>
+          </li>
+          <li class="flex p-6">
+            <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+              <img src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg" alt="Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch." class="h-full w-full object-cover object-center">
+            </div>
+
+            <div class="ml-4 flex flex-1 flex-col">
+              <div>
+                <div class="flex justify-between text-base font-medium text-gray-900">
+                  <h3>
+                    <a href="#">Medium Stuff Satchel</a>
+                  </h3>
+                  <p class="ml-4">$32.00</p>
+                </div>
+                <p class="mt-1 text-sm text-gray-500">Blue</p>
+              </div>
+              <div class="flex flex-1 items-end justify-between text-sm">
+                <p class="text-gray-500">Qty 1</p>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <dl class="p-6 border-t border-b border-gray-200 space-y-6">
+          <div class="flex items-center justify-between">
+            <dt class="text-sm">Subtotal</dt>
+            <dd class="text-sm font-medium text-gray-900">
+              $789.90
+            </dd>
+          </div>
+          <div class="flex items-center justify-between">
+            <dt class="text-sm">Delivery</dt>
+            <dd class="text-sm font-medium text-gray-900">
+              $15.00
+            </dd>
+          </div>
+          <div class="flex items-center justify-between">
+            <dt class="text-sm">Taxes</dt>
+            <dd class="text-sm font-medium text-gray-900">
+              $5.90
+            </dd>
+          </div>
+          <div class="flex items-center justify-between border-t border-gray-200 pt-6">
+            <dt class="text-base">Subtotal</dt>
+            <dd class="text-base font-medium text-gray-900">
+              $789.90
+            </dd>
+          </div>
+        </dl>
+        <div class="p-6">
+          <button type="button" class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Confirm Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+

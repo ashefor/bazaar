@@ -1,0 +1,9 @@
+.rotated {
+  svg {
+    @apply rotate-180
+  }
+
+  span {
+    @apply font-bold
+  }
+}
