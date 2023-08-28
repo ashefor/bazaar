@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { environment } from '@env/environment.development';
 
 @Pipe({
   name: 'imageUrl',
@@ -7,7 +8,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ImageUrlPipe implements PipeTransform {
 
   transform(value: string): string {
-    return value?  'http://localhost:8000/'+ value : '';
+    return value?  `${environment.baseUrl}/${value}` : '';
   }
 
 }
