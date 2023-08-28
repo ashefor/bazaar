@@ -12,26 +12,12 @@ import { PageHeaderComponent } from '@shared/components/page-header/page-header.
 })
 export class FaqsComponent implements AfterViewInit {
 
-  accordionItems: AccordionItem[] = [
-
-  ]
+  accordionItems: AccordionItem[] = []
 
   options: AccordionOptions = {
     // alwaysOpen: true,
     activeClasses: 'bg-white text-gray-900 rotated',
-    inactiveClasses: 'text-gray-500',
-    onOpen: (item) => {
-      console.log('accordion item has been shown');
-      console.log(item);
-    },
-    onClose: (item) => {
-      console.log('accordion item has been hidden');
-      console.log(item);
-    },
-    onToggle: (item) => {
-      console.log('accordion item has been toggled');
-      console.log(item);
-    },
+    inactiveClasses: 'text-gray-500'
   };
 
   accordion?: AccordionInterface
@@ -107,10 +93,5 @@ export class FaqsComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-  }
-
-  toggleAccordion(id: string) {
-    console.log(this.accordion)
-    // this.accordion?.toggle(id);
   }
 }

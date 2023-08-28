@@ -1,126 +1,133 @@
-<app-page-header [headerTitle]="'Checkout'"></app-page-header>
+<app-page-header [headerTitle]="'Cart'"></app-page-header>
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-x-14">
-<div class="space-y-12 sm:col-span-2">
-  <div class="">
-    <h2 class="text-base font-semibold leading-7 text-gray-900">Shipping information</h2>
+<ng-container *ngIf="isLoading; else showCart">
+  <div class="py-24 px-8 flex justify-center items-center lg:h-96">
+    <svg class="animate-spin h-10 w-10 text-gray-500 max-w-sm mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none"
+      viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+      </path>
+    </svg>
+  </div>
+</ng-container>
+<ng-template #showCart>
+  <ng-container *ngIf="cartItems.length; else emptyCart">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-14">
+      <div class="space-y-12 sm:col-span-2">
+        <div class="">
+          <a [routerLink]="['/products']" class="inline-flex items-center font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            <svg class="h-4 w-4 -ml-1 mr-2" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path>
+            </svg>
+            Continue shopping</a>
 
-    <div class="mt-8 border shadow-xs rounded-xl">
-      <div class="flow-root">
-        <ul role="list" class="divide-y divide-gray-200">
-          <li class="flex p-6">
-            <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-              <img src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg" alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." class="h-full w-full object-cover object-center">
+          <div class="mt-8 border shadow-xs rounded-xl">
+            <div class="flow-root">
+              <ul role="list" class="divide-y divide-gray-200">
+                <li class="flex p-6" *ngFor="let item of cartItems">
+                  <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                    <img [src]="item.product.main_image | imageUrl" alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." class="h-full w-full object-cover object-center">
+                  </div>
+
+                  <div class="ml-4 flex flex-1 flex-col">
+                    <div>
+                      <div class="flex justify-between text-base font-medium text-gray-900">
+                        <h3>
+                          <a href="#">{{item.product.product_name}}</a>
+                        </h3>
+                        <button [disabled]="isPerformingOperation" (click)="deleteFromCart(item)" type="button" class="flex ml-4 text-rose-500 hover:text-rose-700">
+                          <span class="sr-only">Remove</span>
+                          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                          </svg>
+                        </button>
+                      </div>
+                      <p class="mt-1 text-sm text-gray-500">{{item.product.product_color}}</p>
+                    </div>
+                    <div class="flex flex-1 items-end justify-between text-sm">
+                      <p class="">{{item.product.product_price | currency: '₦'}}</p>
+
+                      <select [disabled]="isPerformingOperation" [(ngModel)]="item.quantity" (ngModelChange)="updatQuantity(item, $event)" id="quantity" name="quantity" class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                      </select>
+                    </div>
+                  </div>
+                </li>
+              </ul>
             </div>
-
-            <div class="ml-4 flex flex-1 flex-col">
-              <div>
-                <div class="flex justify-between text-base font-medium text-gray-900">
-                  <h3>
-                    <a href="#">Throwback Hip Bag</a>
-                  </h3>
-                  <button type="button" class="flex ml-4 text-rose-500 hover:text-rose-700">
-                    <span class="sr-only">Remove</span>
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                  </button>
+            <!-- <div class="py-6">
+              <div class="w-80">
+                <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Discount Code</label>
+                <div class="mt-2">
+                  <div class="flex gap-4">
+                    <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                    <button type="button" class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 p-1.5 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Apply</button>
+                  </div>
                 </div>
-                <p class="mt-1 text-sm text-gray-500">Salmon</p>
               </div>
-              <div class="flex flex-1 items-end justify-between text-sm">
-                <p class="">$90.00</p>
-
-                <select id="quantity" name="quantity" class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>10</option>
-                  <option>200</option>
-                </select>
-              </div>
-            </div>
-          </li>
-          <li class="flex p-6">
-            <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-              <img src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg" alt="Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch." class="h-full w-full object-cover object-center">
-            </div>
-
-            <div class="ml-4 flex flex-1 flex-col">
-              <div>
-                <div class="flex justify-between text-base font-medium text-gray-900">
-                  <h3>
-                    <a href="#">Medium Stuff Satchel</a>
-                  </h3>
-                  <button type="button" class="flex ml-4 text-rose-500 hover:text-rose-700">
-                    <span class="sr-only">Remove</span>
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                  </button>
-                </div>
-                <p class="mt-1 text-sm text-gray-500">Blue</p>
-              </div>
-              <div class="flex flex-1 items-end justify-between text-sm">
-                <p class="">$90.00</p>
-
-                <select id="quantity" name="quantity" class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>10</option>
-                  <option>200</option>
-                </select>
-              </div>
-            </div>
-          </li>
-        </ul>
+            </div> -->
+          </div>
+        </div>
       </div>
-      <!-- <div class="py-6">
-        <div class="w-80">
-          <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Discount Code</label>
-          <div class="mt-2">
-            <div class="flex gap-4">
-              <input type="text" name="first-name" id="first-name" autocomplete="given-name" class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-              <button type="button" class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 p-1.5 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Apply</button>
+      <div>
+        <div>
+          <h2 class="text-base font-semibold leading-7 text-gray-900">Order Summary</h2>
+          <div class="mt-8 border shadow-xs rounded-xl">
+            <div class="flow-root">
+              <dl class="p-6 border-t border-b border-gray-200 space-y-6">
+                <div class="flex items-center justify-between">
+                  <dt class="text-sm">Subtotal</dt>
+                  <dd class="text-sm font-medium text-gray-900">
+                    {{cartTotal | currency: '₦'}}
+                  </dd>
+                </div>
+                <div class="flex justify-between">
+                  <dt class="text-sm">Delivery</dt>
+                  <dd class="text-sm font-medium text-gray-900 ml-24 text-right">
+                    Add your Delivery address at checkout to see delivery charges
+                  </dd>
+                </div>
+                <div class="flex items-center justify-between">
+                  <dt class="text-sm">Total</dt>
+                  <dd class="text-sm font-medium text-gray-900">
+                    {{cartTotal | currency: '₦'}}
+                  </dd>
+                </div>
+              </dl>
+              <div class="p-6">
+                <a href="/checkout" class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Continue to checkout</a>
+              </div>
             </div>
           </div>
         </div>
-      </div> -->
-    </div>
-  </div>
-</div>
-<div>
-  <div>
-    <h2 class="text-base font-semibold leading-7 text-gray-900">Order Summary</h2>
-    <div class="mt-8 border shadow-xs rounded-xl">
-      <div class="flow-root">
-        <dl class="p-6 border-t border-b border-gray-200 space-y-6">
-          <div class="flex items-center justify-between">
-            <dt class="text-sm">Subtotal</dt>
-            <dd class="text-sm font-medium text-gray-900">
-              $789.90
-            </dd>
-          </div>
-          <div class="flex justify-between">
-            <dt class="text-sm">Delivery</dt>
-            <dd class="text-sm font-medium text-gray-900 ml-24 text-right">
-              Add your Delivery address at checkout to see delivery charges
-            </dd>
-          </div>
-          <div class="flex items-center justify-between">
-            <dt class="text-sm">Total</dt>
-            <dd class="text-sm font-medium text-gray-900">
-              $789.90
-            </dd>
-          </div>
-        </dl>
-        <div class="p-6">
-          <a href="/checkout" class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Continue to checkout</a>
-        </div>
       </div>
+      </div>
+  </ng-container>
+</ng-template>
+<ng-template #emptyCart>
+  <div class="py-14 ">
+    <div class="py-10 px-8 max-w-sm mx-auto">
+      <svg class="h-7 w-7 mx-auto flex-shrink-0 text-gray-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+      </svg>
+      <h1 class="font-bold text-base tracking-wider text-center mt-8">Your cart is empty</h1>
+      <p class="mt-4 text-center text-sm text-gray-500">
+        Items remain in your bag for 60 minutes, and then they’re cleared.
+      </p>
+      <p class="text-center mt-6 text-sm text-gray-500">
+        <a [routerLink]="['/products']" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Continue shopping</a>
+      </p>
     </div>
   </div>
-</div>
-</div>
+</ng-template>
 

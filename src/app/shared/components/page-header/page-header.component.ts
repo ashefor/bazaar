@@ -10,4 +10,5 @@ import { CommonModule } from '@angular/common';
 })
 export class PageHeaderComponent {
   @Input() headerTitle: string = '';
+  @Input() subTitle: string = '';
 }

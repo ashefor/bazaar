@@ -23,6 +23,18 @@ export const routes: Routes = [
         loadComponent: () => import('@pages/cart/cart.component').then(m => m.CartComponent)
       },
       {
+        path: 'orders',
+        loadComponent: () => import('@pages/orders/orders.component').then(m => m.OrdersComponent)
+      },
+      {
+        path: 'summary/:reference',
+        loadComponent: () => import('@pages/order-summary/order-summary.component').then(m => m.OrderSummaryComponent)
+      },
+      {
+        path: 'error',
+        loadComponent: () => import('@pages/server-error/server-error.component').then(m => m.ServerErrorComponent)
+      },
+      {
         path: '',
         loadComponent: () => import('@pages/home/home.component').then(m => m.HomeComponent)
       }

@@ -11,5 +11,13 @@ body {
 
 body {
   @apply h-full bg-white;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Karla', sans-serif;
 }
+
+input.ng-invalid.ng-touched,
+input.ng-invalid.ng-dirty,
+textarea.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-dirty {
+  @apply ring-2 ring-rose-400
+}
+

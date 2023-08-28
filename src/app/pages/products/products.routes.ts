@@ -2,7 +2,7 @@ import { Routes } from "@angular/router";
 
 export const routes: Routes = [
   {
-    path: ':slug',
+    path: ':productId',
     loadComponent: () => import('@pages/products/view-product/view-product.component').then(m => m.ViewProductComponent)
   },
   {
