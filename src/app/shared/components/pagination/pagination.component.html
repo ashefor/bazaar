@@ -1,0 +1,21 @@
+<nav class="flex justify-between items-center mt-8 mb-6 border-t pt-6 pb-3">
+  <span class="text-sm text-gray-700 hidden sm:block">
+    Showing <span class="font-semibold text-gray-900">{{pageStart}}</span> to <span class="font-semibold text-gray-900">{{pageLimit}}</span> of <span class="font-semibold text-gray-900">{{totalItems}}</span> Entries
+  </span>
+  <div class="flex justify-between sm:justify-end flex-1">
+    <!-- Previous Button -->
+    <button [disabled]="disableButtons || currentPage <= 1" (click)="previousPage()" class="flex items-center justify-center px-3 h-8 mr-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg enabled:hover:bg-gray-100 enabled:hover:text-gray-700 enabled:focus:outline-none enabled:focus:ring-2 enabled:focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60">
+      <svg class="w-3.5 h-3.5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+      </svg>
+      Previous
+    </button>
+    <button [disabled]="disableButtons || currentPage >= totalPages" (click)="nextPage()" class="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg enabled:hover:bg-gray-100 enabled:hover:text-gray-700 enabled:focus:outline-none focus:ring-2 enabled:focus:ring-indigo-500 enabled:focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60">
+      Next
+      <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+      </svg>
+    </button>
+  </div>
+
+</nav>
