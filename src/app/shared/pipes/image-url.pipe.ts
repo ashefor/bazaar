@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { environment } from '@env/environment';
+import { environment } from '@env/environment.development';
 
 @Pipe({
   name: 'imageUrl',

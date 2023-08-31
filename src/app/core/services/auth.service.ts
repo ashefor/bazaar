@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { storage } from '@core/utils/storage/storage';
-import { environment } from '@env/environment';
+import { environment } from '@env/environment.development';
 import { tap } from 'rxjs/internal/operators/tap';
 import { Observable } from 'rxjs/internal/Observable';
 import { AuthResponse, User } from '@core/interfaces/user.interface';
