@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://bazaar.cptshredder.com/sitemap.xml
