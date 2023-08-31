@@ -17,7 +17,16 @@
         <div class="flex items-start justify-between sticky top-0">
           <h2 class="text-lg font-medium text-gray-900" id="slide-over-title">Shopping cart</h2>
           <div class="ml-3 flex h-7 items-center">
-            <button (click)="closeDrawer()" aria-controls="drawer-example" type="button" class="relative -m-2 p-2 text-gray-400 hover:text-gray-500">
+            <button *ngIf="cartItems.length" type="button" (click)="clearCart()" [disabled]="isPerformingOperation" class="text-sm inline-flex items-center text-rose-600 enabled:hover:text-rose-700 enabled:hover:bg-rose-200 bg-rose-100 rounded inline-flex mr-6 px-2.5 py-0.5 text-sm font-medium">
+              <svg *ngIf="isPerformingOperation" class="animate-spin -ml-1 mr-2 h-2.5 w-2.5" xmlns="http://www.w3.org/2000/svg"
+            fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+            </path>
+          </svg>Clear Cart
+            </button>
+            <button (click)="closeDrawer()" [disabled]="isPerformingOperation" aria-controls="drawer-example" type="button" class="relative -m-2 p-2 text-gray-400 enabled:text-gray-500">
               <span class="absolute -inset-0.5"></span>
               <span class="sr-only">Close panel</span>
               <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
@@ -47,7 +56,6 @@
                   </div>
                   <div class="flex flex-1 items-end justify-between text-sm">
                     <p class="text-gray-500">Qty {{item.quantity}}</p>
-
                     <div class="flex">
                       <button type="button" (click)="deleteFromCart(item)" class="font-medium text-indigo-600 hover:text-indigo-500">Remove</button>
                     </div>

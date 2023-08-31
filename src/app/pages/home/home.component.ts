@@ -10,6 +10,27 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-
+  all_categores = [
+    {
+      value: 'all',
+      label: 'all categories'
+    },
+    {
+      value: 'clothing',
+      label: 'clothing'
+    },
+    {
+      value: 'shoes',
+      label: 'shoes'
+    },
+    {
+      value: 'accessories',
+      label: 'accessories'
+    },
+    {
+      value: 'electronics',
+      label: 'electronics'
+    }
+  ]
   category = 'all'
 }

@@ -1,6 +1,7 @@
 export interface Product {
   _id: string;
   product_name: string;
+  product_slug: string;
   product_description: string;
   product_price: number;
   product_size: string;
@@ -17,4 +18,7 @@ export interface ProductsData {
   message: string;
   totalItems: number;
   totalPages: number;
+  pageSize: number;
+  pageStart: number;
+  pageLimit: number;
 }

@@ -14,10 +14,11 @@ import { ImageUrlPipe } from '@shared/pipes/image-url.pipe';
   styleUrls: ['./cart-preview.component.scss']
 })
 export class CartPreviewComponent implements AfterViewInit {
-  private readonly service = inject(StoreService);
   @Input() cartItems: CartItem[] = [];
-  cartTotal = this.service.cartTotal
   @ViewChild('drawerRef') drawerRef?: ElementRef;
+  private readonly service = inject(StoreService);
+  cartTotal = this.service.cartTotal;
+  cartPreviewToggleState = this.service.getCartToggleState$();
   cartPreviewdrawer?: DrawerInterface;
   options: DrawerOptions = {
     placement: 'right',
@@ -26,20 +27,21 @@ export class CartPreviewComponent implements AfterViewInit {
     edge: false,
     edgeOffset: '',
     backdropClasses: 'bg-gray-900 bg-opacity-50 fixed inset-0 z-30',
-    onHide: () => {
-        console.log('drawer is hidden');
-    },
     onShow: () => {
       this.fetchCartItems();
     },
-    onToggle: () => {
-        console.log('drawer has been toggled');
-    }
   };
   isPerformingOperation  = false;
 
   ngAfterViewInit(): void {
-    this.cartPreviewdrawer = new Drawer(this.drawerRef?.nativeElement, this.options)
+    this.cartPreviewdrawer = new Drawer(this.drawerRef?.nativeElement, this.options);
+    this.cartPreviewToggleState.subscribe(state => {
+      if (state) {
+        this.openDrawer();
+      } else {
+        this.closeDrawer();
+      }
+    })
   }
 
   openDrawer() {
@@ -54,7 +56,6 @@ export class CartPreviewComponent implements AfterViewInit {
     this.service.getCartItems().subscribe({
       next: cart => {
         this.cartItems = cart;
-        console.log(cart);
       },
       error: () => {
         this.cartItems = [];
@@ -71,6 +72,20 @@ export class CartPreviewComponent implements AfterViewInit {
     this.service.deleteFromCart(item.id).subscribe({
       next: () => {
         this.isPerformingOperation = false;
+        this.fetchCartItems()
+      },
+      error: () => {
+        this.isPerformingOperation = false;
+        this.fetchCartItems()
+      }
+    })
+  }
+
+  clearCart() {
+    this.isPerformingOperation = true;
+    this.service.clearCart().subscribe({
+      next: () => {
+        this.isPerformingOperation = false
         this.fetchCartItems()
       },
       error: () => {

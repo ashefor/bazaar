@@ -8,7 +8,6 @@ import { FormsModule } from '@angular/forms';
 import { ImageUrlPipe } from '@shared/pipes/image-url.pipe';
 import { Subject } from 'rxjs/internal/Subject';
 import { StoreService } from '@core/services/store.service';
-import { StorageMap } from '@ngx-pwa/local-storage';
 import { mergeMap } from 'rxjs/internal/operators/mergeMap';
 
 @Component({
@@ -23,7 +22,6 @@ export class ProductCardComponent implements OnInit, AfterViewInit {
   @Input() product!: Product;
   private readonly service = inject(StoreService);
   private readonly destroy$ = new Subject<boolean>();
-  private readonly _storage = inject(StorageMap)
   isAddingToCart = false
   productReviewModal?: ModalInterface;
   productSizes = productSizes;
@@ -33,7 +31,6 @@ export class ProductCardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.getCartItems()
   }
   ngAfterViewInit(): void {
     this.productReviewModal = new Modal(this.productReviewModalRef?.nativeElement, this.modalOptions);
@@ -72,18 +69,5 @@ export class ProductCardComponent implements OnInit, AfterViewInit {
         this.isAddingToCart = false
       }
     })
-  }
-
-  getCartItems() {
-    // this.service.getCartItems().subscribe({
-    //   next: d => {
-    //     console.log(d)
-    //   }
-    // })
-    // this._storage.clear().subscribe({
-    //   next: d => {
-    //     console.log(d)
-    //   }
-    // })
   }
 }

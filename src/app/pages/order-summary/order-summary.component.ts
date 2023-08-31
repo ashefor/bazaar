@@ -36,11 +36,16 @@ export class OrderSummaryComponent implements OnInit, OnDestroy {
         next: (data) => {
           this.order = data.order;
           this.isFetchingSummary = false;
+          this.clearCart();
         },
         error: () => {
           this.isFetchingSummary = false;
         }
       })
     }
+  }
+
+  clearCart() {
+    this.service.clearCart().subscribe();
   }
 }

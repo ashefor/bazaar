@@ -36,12 +36,10 @@ export class StoreLayoutComponent implements OnInit {
   }
 
   fetchCartItems() {
-    console.log('cart')
     this.service.getCartItems().subscribe({
       next: cart => {
         // console.log(cart.reduce((acc, item) => acc + Number(item.quantity), 0))
         this.cartItems = cart;
-        console.log(cart);
       },
       error: () => {
         this.cartItems = [];

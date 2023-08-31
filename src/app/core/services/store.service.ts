@@ -20,10 +20,20 @@ export class StoreService {
   modulePath = 'products';
   orderModulePath = 'orders';
   cartTotal$ = new BehaviorSubject<number>(0);
+  toggleCartModal$ = new BehaviorSubject<boolean>(false);
   constructor() { }
 
   get cartTotal(): Observable<number> {
     return this.cartTotal$.asObservable();
+  }
+
+  //
+  getCartToggleState$(): Observable<boolean> {
+    return this.toggleCartModal$.asObservable();
+  }
+
+  toggleCartPreviewState(value: boolean) {
+    this.toggleCartModal$.next(value);
   }
 
   setCartTotal(total: number) {
@@ -32,24 +42,31 @@ export class StoreService {
 
   updateCartTotal() {
     const cartTotal = this.cartTotal$.getValue();
-    console.log(cartTotal);
     this.cartTotal$.next(cartTotal + 1);
   }
 
   // fetch all products
-  fetchProducts(): Observable<ProductsData> {
-    return this._http.get<ProductsData>(`${environment.baseUrl}/${this.modulePath}`);
+  fetchProducts(params: { page: number; limit: number; }): Observable<ProductsData> {
+    return this._http.get<ProductsData>(`${environment.baseUrl}/${this.modulePath}?page=${params.page}&perPage=${params.limit}`);
   }
 
 
   // fetch a single product
   fetchSingleProduct(productId: string): Observable<Product> {
-    return this._http.get<{product: Product}>(`${environment.baseUrl}/${this.modulePath}/${productId}`).pipe(map(data => data.product))
+    return this._http.get<{ product: Product }>(`${environment.baseUrl}/${this.modulePath}/${productId}`).pipe(map(data => data.product))
   }
 
   //add product to cart
   addProductToCart(params: any) {
-    return this._storage.add('cart', params).pipe(delay(3000)).pipe(tap((data: any[]) => {
+    return this._storage.add('cart', params).pipe(delay(1500), tap((data: any[]) => {
+      this.toggleCartPreviewState(true)
+      this.updateCartTotal()
+    }));
+  }
+
+  clearCart() {
+    return this._storage.clear('cart').pipe(delay(1500), tap((data: boolean) => {
+      this.toggleCartPreviewState(false)
       this.updateCartTotal()
     }));
   }
@@ -65,7 +82,8 @@ export class StoreService {
   }
 
   updateCartItem(params: any) {
-    return this._storage.update('cart', params).pipe(tap((data: any[]) => {
+    return this._storage.update('cart', params).pipe(delay(1500), tap((data: any[]) => {
+      this.toggleCartPreviewState(true)
       this.updateCartTotal()
     }));
   }
@@ -74,15 +92,15 @@ export class StoreService {
     return this._storage.delete('cart', productId)
   }
 
-  createOrder(params: { shipping: { delivery: number; delivery_type: string; total: number; address?: string | undefined; phone?: string | undefined; first_name?: string | undefined; last_name?: string | undefined; city?: string | undefined; state?: string | undefined; }; items: CartItem[]; }): Observable<{data: any}> {
-    return this._http.post<{data: {data: any}}>(`${environment.baseUrl}/${this.orderModulePath}/create`, params)
+  createOrder(params: { shipping: { delivery: number; delivery_type: string; total: number; address?: string | undefined; phone?: string | undefined; first_name?: string | undefined; last_name?: string | undefined; city?: string | undefined; state?: string | undefined; }; items: CartItem[]; }): Observable<{ data: any }> {
+    return this._http.post<{ data: { data: any } }>(`${environment.baseUrl}/${this.orderModulePath}/create`, params)
   }
 
-  verifyPaystackOrder(reference: string): Observable<{order: Order}> {
-    return this._http.get<{order: Order}>(`${environment.baseUrl}/${this.orderModulePath}/summary?reference=${reference}`)
+  verifyPaystackOrder(reference: string): Observable<{ order: Order }> {
+    return this._http.get<{ order: Order }>(`${environment.baseUrl}/${this.orderModulePath}/summary?reference=${reference}`)
   }
 
-  fetchOrders(): Observable<{orders: Order[]}> {
-    return this._http.get<{orders: Order[]}>(`${environment.baseUrl}/${this.orderModulePath}`)
+  fetchOrders(): Observable<{ orders: Order[] }> {
+    return this._http.get<{ orders: Order[] }>(`${environment.baseUrl}/${this.orderModulePath}`)
   }
 }
