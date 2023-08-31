@@ -34,6 +34,10 @@ export class ViewProductComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  refresh() {
+    window.location.reload();
+  }
+
   ngOnInit(): void {
     this.fetchProductDetails();
   }
