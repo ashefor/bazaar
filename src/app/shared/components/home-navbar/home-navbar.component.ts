@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { CartPreviewComponent } from '../cart-preview/cart-preview.component';
 import { AuthService } from '@core/services/auth.service';
 import { storage } from '@core/utils/storage/storage';
-import { StoreService } from '@core/services/store.service';
-import { CartItem } from '@core/interfaces/cart.interface';
+import { Drawer } from 'flowbite';
+
 
 @Component({
   selector: 'app-home-navbar',
@@ -14,21 +14,39 @@ import { CartItem } from '@core/interfaces/cart.interface';
   templateUrl: './home-navbar.component.html',
   styleUrls: ['./home-navbar.component.scss']
 })
-export class HomeNavbarComponent implements OnInit {
+export class HomeNavbarComponent implements OnInit, AfterViewInit {
+  @ViewChild('drawerRef') drawerRef?: ElementRef;
   private readonly router = inject(Router);
   public readonly auth = inject(AuthService);
-  private readonly service = inject(StoreService);
   user = storage.getUser();
+  drawer?: Drawer
 
   ngOnInit(): void {
     // this.fetchCartItems();
   }
 
-  // hideMenu(menu: string): boolean {
-  //   return this.router.url.includes(menu) ?? false;
-  // }
+  ngAfterViewInit(): void {
+    this.drawer = new Drawer(this.drawerRef?.nativeElement, {
+      placement: 'left'
+    })
+  }
+
+  openDrawer() {
+    this.drawer?.show()
+  }
+
+  closeDrawer() {
+    this.drawer?.hide()
+  }
+
 
   get hideMenu(): boolean {
     return this.router.url.includes('checkout') || this.router.url.includes('cart');
+  }
+
+  logOut() {
+    this.auth.clearSession();
+    this.closeDrawer();
+    this.router.navigate(['/']);
   }
 }
