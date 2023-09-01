@@ -38,6 +38,10 @@ export class HomeComponent {
   images = images;
 
   changeImagesArray(category: string) {
-    this.images = images.filter(image => image.category == category)
+    if (category == 'all') {
+      this.images = images
+    } else {
+      this.images = images.filter(image => image.category == category)
+    }
   }
 }
