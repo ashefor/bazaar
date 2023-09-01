@@ -1,6 +1,6 @@
 <ul class="flex items-center justify-center py-4 md:py-8 flex-wrap">
   <li *ngFor="let item of all_categores">
-    <input type="radio" [id]="item.value" name="category" [value]="item.value" [(ngModel)]="category" class="hidden peer" required>
+    <input (ngModelChange)="changeImagesArray($event)" type="radio" [id]="item.value" name="category" [value]="item.value" [(ngModel)]="category" class="hidden peer" required>
     <label [htmlFor]="item.value"
       class="inline-flex text-gray-900 border border-white hover:border-gray-200 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 capitalize text-center mr-3 peer-checked:border-blue-600 peer-checked:text-blue-600 cursor-pointer">
       {{item.label}}
@@ -8,52 +8,8 @@
   </li>
 </ul>
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 pb-16">
-  <div>
-    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg"
-      alt="">
-  </div>
-  <div>
-    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg"
-      alt="">
-  </div>
-  <div>
-    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg"
-      alt="">
-  </div>
-  <div>
-    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg"
-      alt="">
-  </div>
-  <div>
-    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg"
-      alt="">
-  </div>
-  <div>
-    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg"
-      alt="">
-  </div>
-  <div>
-    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-6.jpg"
-      alt="">
-  </div>
-  <div>
-    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-7.jpg"
-      alt="">
-  </div>
-  <div>
-    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-8.jpg"
-      alt="">
-  </div>
-  <div>
-    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-9.jpg"
-      alt="">
-  </div>
-  <div>
-    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-10.jpg"
-      alt="">
-  </div>
-  <div>
-    <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-11.jpg"
+  <div *ngFor="let image of images">
+    <img class="h-auto max-w-full rounded-lg" [src]="image.image"
       alt="">
   </div>
 </div>

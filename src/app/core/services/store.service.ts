@@ -67,7 +67,7 @@ export class StoreService {
   clearCart() {
     return this._storage.clear('cart').pipe(delay(1500), tap((data: boolean) => {
       this.toggleCartPreviewState(false)
-      this.updateCartTotal()
+      this.setCartTotal(0)
     }));
   }
 
@@ -102,5 +102,14 @@ export class StoreService {
 
   fetchOrders(): Observable<{ orders: Order[] }> {
     return this._http.get<{ orders: Order[] }>(`${environment.baseUrl}/${this.orderModulePath}`)
+  }
+
+  viewInvoice(order_id: string): Observable<any> {
+    // return this._http.get<any>(`${environment.baseUrl}/${this.orderModulePath}/invoice/${order_id}`)
+    return this._http.get<any>(`${environment.baseUrl}/${this.orderModulePath}/invoice/${order_id}`)
+  }
+
+  changePassword(params: Partial<{ current_password: string; new_password: string; confirm_password: string; }>) {
+    return this._http.post<{ message: string }>(`${environment.baseUrl}/auth/change-password`, params)
   }
 }

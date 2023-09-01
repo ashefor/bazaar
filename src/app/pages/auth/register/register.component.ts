@@ -1,6 +1,6 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/internal/operators/takeUntil';
@@ -16,10 +16,9 @@ import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnDestroy {
-  private readonly router = inject(Router)
   private readonly service = inject(AuthService);
   private readonly destroy$ = new Subject<boolean>();
-  private readonly notyf = inject(NotyfService)
+  private readonly notyf = inject(NotyfService);
   isLoading = false;
   hasCreatedAccount = false
   errorMsg: any;

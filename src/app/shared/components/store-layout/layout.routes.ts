@@ -1,5 +1,6 @@
 import { Routes } from "@angular/router";
 import { StoreLayoutComponent } from "./store-layout.component";
+import { authGuard } from "@core/guards/auth.guard";
 
 export const routes: Routes = [
   {
@@ -20,6 +21,7 @@ export const routes: Routes = [
       },
       {
         path: 'checkout',
+        canMatch: [authGuard({requiresAuthentication: true})],
         loadComponent: () => import('@pages/checkout/checkout.component').then(m => m.CheckoutComponent),
         data: {
           title: 'Checkout - Bazaar',
@@ -28,6 +30,7 @@ export const routes: Routes = [
       },
       {
         path: 'cart',
+        canMatch: [authGuard({requiresAuthentication: true})],
         loadComponent: () => import('@pages/cart/cart.component').then(m => m.CartComponent),
         data: {
           title: 'Cart - Bazaar',
@@ -36,6 +39,7 @@ export const routes: Routes = [
       },
       {
         path: 'orders',
+        canMatch: [authGuard({requiresAuthentication: true})],
         loadComponent: () => import('@pages/orders/orders.component').then(m => m.OrdersComponent),
         data: {
           title: 'Orders - Bazaar',
@@ -44,6 +48,7 @@ export const routes: Routes = [
       },
       {
         path: 'summary',
+        canMatch: [authGuard({requiresAuthentication: true})],
         loadComponent: () => import('@pages/order-summary/order-summary.component').then(m => m.OrderSummaryComponent),
         data: {
           title: 'Order summary - Bazaar',
@@ -56,6 +61,15 @@ export const routes: Routes = [
         data: {
           title: 'Error - Bazaar',
           description: 'We are already working on solving the error'
+        }
+      },
+      {
+        path: 'change-password',
+        canMatch: [authGuard({requiresAuthentication: true})],
+        loadComponent: () => import('@pages/auth/change-password/change-password.component').then(m => m.ChangePasswordComponent),
+        data: {
+          title: 'Change password - Bazaar',
+          description: 'Change password to your Bazaar account'
         }
       },
       {

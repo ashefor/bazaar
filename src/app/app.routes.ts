@@ -16,5 +16,10 @@ export const routes: Routes = [
       title: 'Home - Bazaar',
       description: 'Bazaar - Your Ultimate Online Shopping Destination'
     }
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
   }
 ];

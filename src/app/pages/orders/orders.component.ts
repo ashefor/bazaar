@@ -43,4 +43,12 @@ export class OrdersComponent implements OnInit, OnDestroy {
       }
     })
   }
+
+  viewInvoice(order_id: string) {
+    this.service.viewInvoice(order_id).pipe().subscribe({
+      next: (data) => {
+        window.open(data.link)
+      }
+    })
+  }
 }

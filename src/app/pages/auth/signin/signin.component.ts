@@ -34,12 +34,11 @@ export class SigninComponent implements OnDestroy {
       this.service.handleLogin(form.value).pipe(takeUntil(this.destroy$)).subscribe({
         next:(data) => {
           this.isLoading = false;
-          this.router.navigate(['/']);
+          // this.router.navigate(['/']);
+          window.location.replace('/')
           this.errorMsg = undefined;
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.error.message)
-          console.log(form.controls)
           this.isLoading = false;
           if ([HttpStatusCode.BadRequest, HttpStatusCode.Unauthorized].includes(error.status)) {
             this.errorMsg = error.error.message

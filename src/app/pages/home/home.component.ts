@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { images } from './images';
 
 @Component({
   selector: 'app-home',
@@ -33,4 +34,10 @@ export class HomeComponent {
     }
   ]
   category = 'all'
+
+  images = images;
+
+  changeImagesArray(category: string) {
+    this.images = images.filter(image => image.category == category)
+  }
 }
