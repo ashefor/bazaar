@@ -20,7 +20,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   private readonly service = inject(StoreService);
   isFetchingOrders = false;
   orders: Order[] = [];
-  isFetchingInvoice = true;
+  isFetchingInvoice = false;
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
