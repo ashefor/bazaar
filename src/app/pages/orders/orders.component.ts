@@ -20,6 +20,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   private readonly service = inject(StoreService);
   isFetchingOrders = false;
   orders: Order[] = [];
+  isFetchingInvoice = true;
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
@@ -45,9 +46,14 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   viewInvoice(order_id: string) {
-    this.service.viewInvoice(order_id).pipe().subscribe({
+    this.isFetchingInvoice = true;
+    this.service.viewInvoice(order_id).pipe(takeUntil(this.destroy$)).subscribe({
       next: (data) => {
+        this.isFetchingInvoice = false;
         window.open(data.link)
+      },
+      error: () => {
+        this.isFetchingInvoice = false;
       }
     })
   }

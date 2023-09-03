@@ -82,7 +82,7 @@ export class CheckoutComponent implements OnInit {
         next: (data) => {
           console.log(data)
           window.location.href = data.data.authorization_url
-          this.isLoading = false;
+          // this.isLoading = false;
         },
         error: () => {
           this.isLoading = false;

@@ -33,7 +33,7 @@ export class SigninComponent implements OnDestroy {
       this.errorMsg = undefined;
       this.service.handleLogin(form.value).pipe(takeUntil(this.destroy$)).subscribe({
         next:(data) => {
-          this.isLoading = false;
+          // this.isLoading = false;
           // this.router.navigate(['/']);
           window.location.replace('/')
           this.errorMsg = undefined;
