@@ -16,8 +16,8 @@ export class FaqsComponent implements AfterViewInit {
 
   options: AccordionOptions = {
     // alwaysOpen: true,
-    activeClasses: 'bg-white text-gray-900 rotated',
-    inactiveClasses: 'text-gray-500'
+    activeClasses: 'bg-white text-gray-900',
+    inactiveClasses: 'text-gray-500 rotated'
   };
 
   accordion?: AccordionInterface
